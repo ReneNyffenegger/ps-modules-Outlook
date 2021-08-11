@@ -16,7 +16,8 @@ function send-outlookMail {
       [string[]]  $attachments
    )
 
-    $ol   = get-activeObject outlook.application
+#   $ol   = get-activeObject outlook.application
+    $ol   = get-msOfficeComObject  outlook
 
     $email = $ol.createItem(0)  # 0 = olMailItem
     $email.to      = $recipient
