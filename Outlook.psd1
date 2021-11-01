@@ -1,10 +1,11 @@
 @{
    RootModule        = 'Outlook.psm1'
-   ModuleVersion     = '0.2'
+   ModuleVersion     = '0.3'
    RequiredModules   = @(
       'MS-Office'
    )
    FunctionsToExport = @(
-     'send-outlookMail'
+     'send-outlookMail',
+     'close-outlookWindows'
     )
 }

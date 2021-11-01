@@ -42,3 +42,21 @@ function send-outlookMail {
  #  $email.display()
     $email.send()
 }
+
+function close-outlookWindows {
+    $ol = get-msOfficeComObject outlook
+
+    foreach ($ins in $ol.inspectors) {
+       $ins.close(1) # 1 = olDiscard
+    }
+
+    foreach ($rmd in $ol.reminders) {
+       if ($rmd.isVisible) {
+          write-host "$($rmd.caption) is visible"
+          $rmd.dismiss()
+       }
+       else {
+          write-host "$($rmd.caption) is not visible"
+       }
+    }
+}
