@@ -46,17 +46,39 @@ function send-outlookMail {
 function close-outlookWindows {
     $ol = get-msOfficeComObject outlook
 
-    foreach ($ins in $ol.inspectors) {
-       $ins.close(1) # 1 = olDiscard
+  # 2021-11-29 / V.4: Loop multiple times
+    $insLoopAgain  = $true
+    while ($insLoopAgain) {
+       write-host 'ins loop'
+
+       $insLoopAgain = $false
+       $ins_          = $ol.inspectors
+
+       foreach ($ins in $ins_) {
+          $insLoopAgain = $true 
+          write-host "   $($ins.caption)"
+          $ins.close(1) # 1 = olDiscard
+       }
     }
 
-    foreach ($rmd in $ol.reminders) {
-       if ($rmd.isVisible) {
-          write-host "$($rmd.caption) is visible"
-          $rmd.dismiss()
-       }
-       else {
-          write-host "$($rmd.caption) is not visible"
+
+#   2021-11-29 / V.4: Loop multiple times
+    $rmdLoopAgain  = $true
+    while ($rmdLoopAgain) {
+       write-host 'rmd loop'
+
+       $rmdLoopAgain = $false
+       $rmd_          = $ol.reminders
+
+       foreach ($rmd in $rmd_) {
+          if ($rmd.isVisible) {
+             $rmdLoopAgain = $true
+             write-host "Reminder: $($rmd.caption)"
+             $rmd.dismiss()
+          }
+          else {
+          #  write-host "$($rmd.caption) is not visible"
+          }
        }
     }
 }
