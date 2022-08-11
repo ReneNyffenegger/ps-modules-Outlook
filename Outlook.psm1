@@ -82,3 +82,12 @@ function close-outlookWindows {
        }
     }
 }
+
+function disable-outlookNotifications {
+   $regKeyOfficeRootV = get-msOfficeRegRoot
+
+   $regKeyOfficeRootV
+
+   set-itemProperty "$regKeyOfficeRootV\outlook\preferences" -name newMailDesktopAlerts -type dWord -value 0
+
+}
