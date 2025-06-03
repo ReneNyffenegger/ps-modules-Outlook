@@ -1,6 +1,6 @@
 @{
    RootModule        = 'Outlook.psm1'
-   ModuleVersion     = '0.5'
+   ModuleVersion     = '0.6'
    RequiredModules   = @(
       'MS-Office'
    )

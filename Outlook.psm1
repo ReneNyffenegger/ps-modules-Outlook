@@ -70,8 +70,21 @@ function close-outlookWindows {
        $rmdLoopAgain = $false
        $rmd_          = $ol.reminders
 
+
        foreach ($rmd in $rmd_) {
-          if ($rmd.isVisible) {
+          try {
+           # V0.6: catch "The property 'isVisible' cannot be found on this object."
+             $isVisible = $rmd.visible
+          }
+          catch {
+             if ($_.exception.hResult -eq 0x80131501) {
+                $isVisible = $false
+             }
+             else {
+                throw
+             }
+          }
+          if ($isVisible) {
              $rmdLoopAgain = $true
              write-host "Reminder: $($rmd.caption)"
              $rmd.dismiss()
